@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Cozely — Put your phones together</title>
+  <meta name="description" content="Cozely is a private place for two: one small daily question, thoughtful notes, guided journeys, 30 games, and the moments you keep together." />
+  <meta name="theme-color" content="#F4EFE7" />
+  <meta property="og:title" content="Cozely — Put your phones together" />
+  <meta property="og:description" content="Thirty ways to play, talk, laugh, and feel closer." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://bswxyz.github.io/cozely-legal/assets/cozely-social.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Cozely — Put your phones together" />
+  <meta name="twitter:description" content="Thirty ways to play, talk, laugh, and feel closer." />
+  <meta name="twitter:image" content="https://bswxyz.github.io/cozely-legal/assets/cozely-social.png" />
+  <link rel="icon" href="assets/cozely-mark.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="assets/cozely-icon-180.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=DM+Serif+Display:ital@0;1&amp;display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --paper: #f4efe7;
+      --paper-deep: #eae2d6;
+      --ink: #151715;
+      --muted: #6f716c;
+      --line: rgba(21, 23, 21, .15);
+      --red: #ff4f62;
+      --red-dark: #df3048;
+      --sage: #bdc7b6;
+      --yellow: #f3c969;
+      --white: #fffdf9;
+      --serif: "DM Serif Display", Georgia, serif;
+      --sans: "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --shadow: 0 28px 70px rgba(41, 32, 24, .17);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--paper);
+      font-family: var(--sans);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      opacity: .16;
+      pointer-events: none;
+      z-index: 20;
+      background-image: repeating-radial-gradient(circle at 20% 30%, rgba(21,23,21,.18) 0 .45px, transparent .55px 4px);
+    }
+    a { color: inherit; text-decoration: none; }
+    button, input { font: inherit; }
+    button { color: inherit; }
+    img { max-width: 100%; }
+    .shell { width: min(1240px, calc(100% - 48px)); margin: 0 auto; }
+    .eyebrow { font-size: 12px; line-height: 1; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; }
+    .eyebrow::before { content: "✦"; color: var(--red); margin-right: 9px; }
+    .display { font-family: var(--serif); font-weight: 400; letter-spacing: -.04em; line-height: .92; }
+    .serif { font-family: var(--serif); font-style: italic; font-weight: 400; }
+
+    .button {
+      min-height: 50px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 0 22px;
+      border: 1px solid var(--ink);
+      border-radius: 999px;
+      background: var(--ink);
+      color: var(--white);
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+      transition: transform .25s ease, background .25s ease, color .25s ease;
+    }
+    .button:hover { transform: translateY(-3px); background: var(--red); border-color: var(--red); }
+    .button.light { background: var(--white); color: var(--ink); border-color: var(--white); }
+    .button.light:hover { background: var(--red); color: #fff; border-color: var(--red); }
+    .arrow { transition: transform .25s ease; }
+    .button:hover .arrow { transform: translateX(4px); }
+
+    nav {
+      height: 82px;
+      position: relative;
+      z-index: 30;
+      border-bottom: 1px solid var(--line);
+    }
+    nav .shell { height: 100%; display: flex; align-items: center; justify-content: space-between; }
+    .brand { display: inline-flex; align-items: center; gap: 10px; font-size: 21px; font-weight: 700; letter-spacing: -.04em; }
+    .brand img { width: 34px; height: 34px; }
+    .nav-links { display: flex; align-items: center; gap: 31px; }
+    .nav-links > a:not(.button) { color: #4f514d; font-size: 14px; font-weight: 600; }
+    .nav-links > a:not(.button):hover { color: var(--red-dark); }
+    .nav-links .button { min-height: 42px; padding-inline: 18px; }
+
+    .hero { padding: 90px 0 0; text-align: center; position: relative; }
+    .hero::after {
+      content: "";
+      position: absolute;
+      width: 560px;
+      height: 560px;
+      border: 1px solid rgba(255, 79, 98, .28);
+      border-radius: 50%;
+      top: 190px;
+      left: 50%;
+      transform: translateX(-50%);
+      pointer-events: none;
+    }
+    .hero-copy { position: relative; z-index: 2; }
+    .hero h1 { font-size: clamp(66px, 10.5vw, 148px); margin: 25px auto 24px; max-width: 1150px; }
+    .hero h1 em { color: var(--red); }
+    .hero-lead { max-width: 610px; margin: 0 auto; color: #585b56; font-size: clamp(17px, 2vw, 21px); }
+    .hero-actions { display: flex; justify-content: center; align-items: center; gap: 18px; margin-top: 31px; }
+    .microcopy { font-size: 12px; color: var(--muted); text-align: left; line-height: 1.35; }
+
+    .product-stage { height: 690px; margin-top: 50px; position: relative; z-index: 3; }
+    .stage-blob {
+      position: absolute;
+      left: 50%;
+      bottom: 0;
+      width: min(1060px, 94vw);
+      height: 540px;
+      transform: translateX(-50%);
+      border-radius: 52% 48% 18% 18% / 38% 38% 12% 12%;
+      background: var(--red);
+      overflow: hidden;
+    }
+    .stage-blob::before, .stage-blob::after {
+      content: "";
+      position: absolute;
+      border: 1px solid rgba(255,255,255,.38);
+      border-radius: 50%;
+    }
+    .stage-blob::before { width: 370px; height: 370px; left: -120px; top: 60px; }
+    .stage-blob::after { width: 260px; height: 260px; right: -60px; top: -70px; }
+    .phone {
+      width: 270px;
+      aspect-ratio: 395 / 860;
+      position: absolute;
+      border: 9px solid #111;
+      border-radius: 40px;
+      overflow: hidden;
+      background: #111;
+      box-shadow: 0 33px 55px rgba(36, 11, 14, .3);
+    }
+    .phone::after { content: ""; position: absolute; inset: 0; box-shadow: inset 0 0 0 1px rgba(255,255,255,.18); border-radius: 31px; pointer-events: none; }
+    .phone img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .phone-one { left: calc(50% - 385px); top: 86px; transform: rotate(-9deg); }
+    .phone-two { left: 50%; top: 10px; transform: translateX(-50%); z-index: 2; }
+    .phone-three { right: calc(50% - 385px); top: 86px; transform: rotate(9deg); }
+    .stage-note {
+      position: absolute;
+      width: 160px;
+      height: 160px;
+      right: calc(50% - 520px);
+      top: 25px;
+      border-radius: 50%;
+      background: var(--yellow);
+      display: grid;
+      place-items: center;
+      text-align: center;
+      transform: rotate(9deg);
+      font-family: var(--serif);
+      font-size: 22px;
+      line-height: 1.03;
+      box-shadow: 0 18px 40px rgba(78, 48, 11, .17);
+    }
+    .stage-note b { font-family: var(--sans); display: block; font-size: 40px; line-height: .8; }
+
+    .ticker { border-block: 1px solid var(--line); overflow: hidden; white-space: nowrap; background: var(--white); }
+    .ticker-track { display: inline-flex; align-items: center; gap: 36px; min-width: max-content; padding: 17px 0; animation: ticker 25s linear infinite; font-size: 13px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
+    .ticker-track span::after { content: "✦"; color: var(--red); margin-left: 36px; }
+    @keyframes ticker { to { transform: translateX(-50%); } }
+
+    .section { padding: 130px 0; }
+    .section-head { display: grid; grid-template-columns: .7fr 1.3fr; gap: 40px; align-items: end; margin-bottom: 70px; }
+    .section-head h2 { font-size: clamp(48px, 7.5vw, 98px); margin: 0; max-width: 800px; }
+    .section-head p { color: var(--muted); margin: 18px 0 0; max-width: 550px; font-size: 17px; }
+
+    .bento { display: grid; grid-template-columns: 1.12fr .88fr; gap: 18px; }
+    .bento-card { position: relative; min-height: 550px; overflow: hidden; border: 1px solid var(--line); border-radius: 34px; }
+    .host-card { background: var(--ink); color: #fff; padding: 48px; }
+    .host-card .eyebrow { color: #d8d7d2; }
+    .host-card h3 { max-width: 560px; font-family: var(--serif); font-size: clamp(46px, 6vw, 82px); font-weight: 400; line-height: .98; letter-spacing: -.04em; margin: 85px 0 20px; }
+    .host-card h3 em { color: var(--red); }
+    .host-card p { color: #bbbcb7; max-width: 490px; font-size: 17px; }
+    .host-orbit { position: absolute; width: 280px; height: 280px; right: -60px; bottom: -75px; border: 1px solid #494a46; border-radius: 50%; }
+    .host-orbit::before { content: "♡"; position: absolute; left: 48px; top: 18px; width: 82px; height: 82px; display: grid; place-items: center; border-radius: 50%; color: #fff; background: var(--red); font: 52px var(--serif); }
+    .game-card { background: var(--sage); }
+    .game-card .copy { padding: 39px 40px 0; position: relative; z-index: 2; }
+    .game-card h3 { font-family: var(--serif); font-size: 46px; line-height: 1; font-weight: 400; letter-spacing: -.035em; margin: 15px 0 10px; }
+    .game-card p { color: #4f544d; max-width: 390px; }
+    .crop-phone { width: 255px; position: absolute; left: 50%; bottom: -205px; transform: translateX(-50%) rotate(4deg); border: 8px solid #111; border-radius: 36px; box-shadow: var(--shadow); }
+
+    .mini-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 18px; }
+    .mini-card { min-height: 265px; padding: 30px; border: 1px solid var(--line); border-radius: 28px; display: flex; flex-direction: column; justify-content: space-between; }
+    .mini-card:nth-child(1) { background: var(--white); }
+    .mini-card:nth-child(2) { background: var(--yellow); }
+    .mini-card:nth-child(3) { background: #dfb7bb; }
+    .mini-icon { width: 46px; height: 46px; border: 1px solid currentColor; border-radius: 50%; display: grid; place-items: center; font-size: 20px; }
+    .mini-card h4 { font: 35px/1 var(--serif); letter-spacing: -.03em; margin: 30px 0 7px; }
+    .mini-card p { margin: 0; color: #595b56; font-size: 14px; }
+
+    .prompt-section { padding: 120px 0; background: var(--red); position: relative; overflow: hidden; }
+    .prompt-section::before { content: ""; position: absolute; width: 600px; height: 600px; left: -300px; top: -220px; border: 1px solid rgba(255,255,255,.35); border-radius: 50%; }
+    .prompt-grid { display: grid; grid-template-columns: .82fr 1.18fr; gap: 80px; align-items: center; position: relative; }
+    .prompt-copy { color: #fff; }
+    .prompt-copy h2 { font-size: clamp(55px, 8vw, 100px); margin: 20px 0 25px; }
+    .prompt-copy p { max-width: 460px; color: rgba(255,255,255,.78); font-size: 17px; }
+    .prompt-card { min-height: 520px; padding: 45px; background: var(--paper); border: 2px solid var(--ink); border-radius: 5px; box-shadow: 18px 18px 0 var(--ink); display: flex; flex-direction: column; justify-content: space-between; transform: rotate(1.5deg); }
+    .prompt-top { display: flex; justify-content: space-between; align-items: center; }
+    .depth { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .17em; }
+    .depth-dots { display: flex; gap: 5px; }
+    .depth-dots i { width: 8px; height: 8px; border: 1px solid var(--ink); border-radius: 50%; }
+    .depth-dots i.active { background: var(--red); border-color: var(--red); }
+    .question { max-width: 650px; margin: 50px 0; font: clamp(37px, 5.2vw, 67px)/1.02 var(--serif); letter-spacing: -.035em; }
+    .prompt-bottom { display: flex; align-items: center; justify-content: space-between; gap: 20px; border-top: 1px solid var(--line); padding-top: 24px; }
+    .prompt-next { border: 0; background: none; padding: 8px; font-weight: 700; cursor: pointer; }
+    .prompt-next:hover { color: var(--red-dark); }
+
+    .keepsake { background: var(--ink); color: var(--white); }
+    .keepsake .section-head p { color: #aaa9a4; }
+    .keepsake-showcase { display: grid; grid-template-columns: 1fr 1fr; min-height: 760px; }
+    .keepsake-copy { padding-right: 80px; display: flex; flex-direction: column; justify-content: center; }
+    .keepsake-copy h2 { font-size: clamp(58px, 8vw, 105px); margin: 18px 0 30px; }
+    .keepsake-copy p { color: #bdbcb7; font-size: 17px; max-width: 520px; }
+    .feature-list { margin-top: 45px; display: grid; gap: 20px; }
+    .feature-row { display: grid; grid-template-columns: 42px 1fr; gap: 16px; padding-top: 20px; border-top: 1px solid #3d3e3a; }
+    .feature-row b { color: var(--red); }
+    .feature-row span { color: #d4d3ce; }
+    .keepsake-art { min-height: 760px; position: relative; background: #252723; border-radius: 38px; overflow: hidden; }
+    .keepsake-art::before { content: ""; position: absolute; inset: 7% 7%; border: 1px solid #4a4c46; border-radius: 50%; }
+    .photo-card { position: absolute; width: 250px; padding: 10px 10px 45px; background: #f2eee5; box-shadow: 0 25px 45px rgba(0,0,0,.4); }
+    .photo-card img { display: block; width: 100%; }
+    .photo-card.one { left: 11%; top: 10%; transform: rotate(-9deg); }
+    .photo-card.two { right: 9%; top: 25%; transform: rotate(8deg); }
+    .photo-card.three { left: 21%; bottom: -15%; transform: rotate(2deg); }
+    .photo-label { margin: 12px 5px 0; color: #252723; font: 19px var(--serif); text-align: center; }
+
+    .steps { padding: 130px 0; }
+    .steps-heading { text-align: center; max-width: 810px; margin: 0 auto 80px; }
+    .steps-heading h2 { font-size: clamp(52px, 7vw, 92px); margin: 18px 0 0; }
+    .step-list { counter-reset: steps; border-top: 1px solid var(--line); }
+    .step-item { counter-increment: steps; display: grid; grid-template-columns: 100px .8fr 1fr; gap: 40px; align-items: center; padding: 42px 0; border-bottom: 1px solid var(--line); }
+    .step-item::before { content: "0" counter(steps); color: var(--red-dark); font-weight: 700; letter-spacing: .08em; }
+    .step-item h3 { margin: 0; font: 40px/1 var(--serif); letter-spacing: -.03em; }
+    .step-item p { color: var(--muted); max-width: 490px; margin: 0; }
+
+    .stories { padding: 120px 0; background: var(--white); }
+    .stories-top { display: flex; justify-content: space-between; align-items: end; margin-bottom: 45px; }
+    .stories-top h2 { font-size: clamp(55px, 7vw, 88px); margin: 15px 0 0; }
+    .text-link { font-weight: 700; border-bottom: 1px solid; padding-bottom: 4px; }
+    .text-link:hover { color: var(--red-dark); }
+    .story-grid { display: grid; grid-template-columns: 1.2fr .9fr .9fr; gap: 18px; }
+    .story { min-height: 420px; border: 1px solid var(--line); padding: 30px; display: flex; flex-direction: column; justify-content: space-between; transition: transform .25s ease; }
+    .story:hover { transform: translateY(-7px); }
+    .story:first-child { background: var(--ink); color: #fff; }
+    .story:nth-child(2) { background: var(--paper-deep); }
+    .story:nth-child(3) { background: var(--sage); }
+    .story-number { width: 54px; height: 54px; border: 1px solid currentColor; border-radius: 50%; display: grid; place-items: center; font: 22px var(--serif); }
+    .story h3 { font: clamp(34px, 3.3vw, 49px)/1 var(--serif); letter-spacing: -.035em; margin: 0 0 20px; }
+    .story p { margin: 0; opacity: .66; }
+
+    .faq-section { padding: 130px 0; }
+    .faq-grid { display: grid; grid-template-columns: .75fr 1.25fr; gap: 80px; }
+    .faq-title h2 { font-size: clamp(58px, 8vw, 100px); margin: 18px 0 22px; }
+    .faq-title p { color: var(--muted); }
+    .faq { border-top: 1px solid var(--line); }
+    .qa { border-bottom: 1px solid var(--line); }
+    .qa button { width: 100%; padding: 25px 0; background: none; border: 0; display: flex; align-items: center; justify-content: space-between; gap: 24px; text-align: left; font-weight: 700; cursor: pointer; }
+    .qa button span { width: 28px; height: 28px; flex: none; border: 1px solid var(--ink); border-radius: 50%; display: grid; place-items: center; transition: transform .25s ease, background .25s ease; }
+    .answer { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .3s ease; }
+    .answer > div { overflow: hidden; color: var(--muted); }
+    .answer p { margin: 0; padding: 0 45px 24px 0; }
+    .qa.open .answer { grid-template-rows: 1fr; }
+    .qa.open button span { transform: rotate(45deg); color: #fff; background: var(--red); border-color: var(--red); }
+
+    .finale { padding: 32px 0; }
+    .finale-panel { min-height: 650px; padding: 85px 30px; background: var(--red); color: #fff; border-radius: 38px; text-align: center; position: relative; overflow: hidden; }
+    .finale-panel::before, .finale-panel::after { content: ""; position: absolute; width: 450px; height: 450px; border: 1px solid rgba(255,255,255,.34); border-radius: 50%; }
+    .finale-panel::before { left: -260px; top: -140px; }
+    .finale-panel::after { right: -230px; bottom: -250px; }
+    .finale h2 { position: relative; max-width: 900px; margin: 25px auto 26px; font-size: clamp(66px, 10vw, 126px); }
+    .finale p { position: relative; color: rgba(255,255,255,.8); font-size: 17px; }
+    .waitlist { position: relative; display: flex; max-width: 530px; margin: 35px auto 0; padding: 6px; background: #fff; border-radius: 999px; }
+    .waitlist input[type="email"] { flex: 1; min-width: 0; border: 0; outline: 0; padding: 0 19px; background: transparent; color: var(--ink); }
+    .waitlist .button { min-height: 50px; }
+    .waitlist-message { position: relative; min-height: 22px; margin-top: 14px; font-weight: 700; font-size: 13px; }
+    .finale-note { position: relative; margin-top: 10px; font-size: 12px; color: rgba(255,255,255,.7); }
+
+    footer { padding: 45px 0 55px; }
+    footer .shell { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 28px; }
+    .footer-links { display: flex; gap: 25px; font-size: 13px; font-weight: 600; }
+    footer small { text-align: right; color: var(--muted); }
+
+    .reveal { opacity: 0; transform: translateY(25px); transition: opacity .75s ease, transform .75s cubic-bezier(.2,.7,.2,1); }
+    .reveal.in { opacity: 1; transform: none; }
+
+    @media (max-width: 980px) {
+      .nav-links > a:not(.button) { display: none; }
+      .product-stage { height: 600px; }
+      .stage-blob { height: 470px; }
+      .phone { width: 230px; }
+      .phone-one { left: calc(50% - 315px); }
+      .phone-three { right: calc(50% - 315px); }
+      .stage-note { right: 2vw; }
+      .section-head, .prompt-grid, .faq-grid { grid-template-columns: 1fr; }
+      .section-head { gap: 20px; }
+      .bento { grid-template-columns: 1fr; }
+      .game-card { min-height: 500px; }
+      .mini-grid { grid-template-columns: 1fr 1fr; }
+      .mini-card:last-child { grid-column: 1 / -1; }
+      .prompt-grid { gap: 60px; }
+      .keepsake-showcase { grid-template-columns: 1fr; gap: 70px; }
+      .keepsake-copy { padding-right: 0; }
+      .story-grid { grid-template-columns: 1fr 1fr; }
+      .story:first-child { grid-column: 1 / -1; }
+    }
+
+    @media (max-width: 700px) {
+      .shell { width: min(100% - 30px, 1240px); }
+      nav { height: 70px; }
+      .brand { font-size: 19px; }
+      .brand img { width: 30px; height: 30px; }
+      .nav-links .button { min-height: 39px; padding-inline: 14px; font-size: 12px; }
+      .hero { padding-top: 65px; }
+      .hero h1 { font-size: clamp(59px, 19vw, 92px); }
+      .hero-actions { flex-direction: column; }
+      .microcopy { text-align: center; }
+      .product-stage { height: 470px; margin-top: 45px; }
+      .stage-blob { height: 365px; border-radius: 48% 52% 8% 8% / 28% 28% 6% 6%; }
+      .phone { width: 165px; border-width: 6px; border-radius: 27px; }
+      .phone-one { left: calc(50% - 205px); top: 90px; }
+      .phone-two { top: 20px; }
+      .phone-three { right: calc(50% - 205px); top: 90px; }
+      .stage-note { width: 100px; height: 100px; right: 0; top: -8px; font-size: 14px; }
+      .stage-note b { font-size: 27px; }
+      .section, .prompt-section, .steps, .stories, .faq-section { padding: 85px 0; }
+      .section-head { margin-bottom: 45px; }
+      .host-card { min-height: 520px; padding: 30px; }
+      .host-card h3 { margin-top: 80px; }
+      .game-card .copy { padding: 30px 28px 0; }
+      .mini-grid { grid-template-columns: 1fr; }
+      .mini-card:last-child { grid-column: auto; }
+      .prompt-card { min-height: 430px; padding: 28px; box-shadow: 10px 10px 0 var(--ink); }
+      .prompt-bottom { align-items: flex-end; }
+      .keepsake-art { min-height: 620px; }
+      .photo-card { width: 190px; }
+      .photo-card.one { left: 5%; }
+      .photo-card.two { right: 3%; top: 31%; }
+      .step-item { grid-template-columns: 50px 1fr; gap: 18px; }
+      .step-item p { grid-column: 2; }
+      .story-grid { grid-template-columns: 1fr; }
+      .story:first-child { grid-column: auto; }
+      .stories-top { display: block; }
+      .stories-top .text-link { display: inline-block; margin-top: 20px; }
+      .finale-panel { min-height: 600px; padding: 70px 18px; border-radius: 28px; }
+      .waitlist { border-radius: 22px; flex-direction: column; background: transparent; padding: 0; gap: 10px; }
+      .waitlist input[type="email"] { min-height: 54px; border-radius: 999px; background: #fff; padding-inline: 20px; }
+      footer .shell { grid-template-columns: 1fr; text-align: center; justify-items: center; }
+      footer small { text-align: center; }
+      .footer-links { flex-wrap: wrap; justify-content: center; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+      .reveal { opacity: 1; transform: none; }
+    }
+  </style>
+</head>
+<body>
+  <nav aria-label="Main navigation">
+    <div class="shell">
+      <a class="brand" href="#top" aria-label="Cozely home"><img src="assets/cozely-mark.svg" alt="" />Cozely</a>
+      <div class="nav-links">
+        <a href="#why">Why Cozely</a>
+        <a href="#play">Try a prompt</a>
+        <a href="stories.html">Journal</a>
+        <a class="button" href="#waitlist">Join the waitlist <span class="arrow">↗</span></a>
+      </div>
+    </div>
+  </nav>
+
+  <main id="top">
+    <header class="hero">
+      <div class="shell hero-copy">
+        <div class="eyebrow">A private place for two</div>
+        <h1 class="display">Less scrolling.<br /><em class="serif">More us.</em></h1>
+        <p class="hero-lead">Notice each other with one small question, send a little something, and make time together through games and guided journeys.</p>
+        <div class="hero-actions">
+          <a class="button" href="#waitlist">Get launch access <span class="arrow">↗</span></a>
+          <div class="microcopy">Coming soon to iOS<br />Made for couples 18+</div>
+        </div>
+      </div>
+      <div class="product-stage" aria-label="A preview of Cozely on three phones">
+        <div class="stage-blob"></div>
+        <div class="phone phone-one"><img src="shots/current-games.jpg" alt="The current Cozely library with 30 games for couples" /></div>
+        <div class="phone phone-two"><img src="shots/current-home.jpg" alt="The current Cozely Today screen with a shared daily question" /></div>
+        <div class="phone phone-three"><img src="shots/current-explore.jpg" alt="The current Cozely Explore screen with journeys and quick games" /></div>
+        <div class="stage-note"><span><b>30</b> games for<br />two</span></div>
+      </div>
+    </header>
+
+    <div class="ticker" aria-label="Cozely features">
+      <div class="ticker-track">
+        <span>One small daily question</span><span>A private Lovebox</span><span>Guided journeys</span><span>30 games for two</span><span>Your story together</span>
+        <span>One small daily question</span><span>A private Lovebox</span><span>Guided journeys</span><span>30 games for two</span><span>Your story together</span>
+      </div>
+    </div>
+
+    <section class="section" id="why">
+      <div class="shell">
+        <div class="section-head reveal">
+          <div class="eyebrow">Built for your chemistry</div>
+          <div>
+            <h2 class="display">The small things.<br /><span class="serif">Made meaningful.</span></h2>
+            <p>Cozely gives the two of you one clear way to connect today—without turning your relationship into another feed to keep up with.</p>
+          </div>
+        </div>
+
+        <div class="bento">
+          <article class="bento-card host-card reveal">
+            <div class="eyebrow">Today’s question</div>
+            <h3>Answer privately.<br />Then <em class="serif">reveal together.</em></h3>
+            <p>One thoughtful prompt a day, with clear partner status and no early peeking. Compare answers when you’re both ready and keep the conversations worth returning to.</p>
+            <div class="host-orbit" aria-hidden="true"></div>
+          </article>
+          <article class="bento-card game-card reveal">
+            <div class="copy">
+              <div class="eyebrow">Pick your mood</div>
+              <h3>Thirty games.<br />Zero awkward starts.</h3>
+              <p>Truth or Dare, 36 Questions, Fear Pong, Love Letter, and more—each paced from warm to connected to deep.</p>
+            </div>
+            <img class="crop-phone" src="shots/current-games.jpg" alt="The current Cozely game library" />
+          </article>
+        </div>
+
+        <div class="mini-grid">
+          <article class="mini-card reveal"><div class="mini-icon" aria-hidden="true">↔</div><div><h4>Perfectly in sync</h4><p>See when each partner is ready, then reveal and play together.</p></div></article>
+          <article class="mini-card reveal"><div class="mini-icon" aria-hidden="true">✉</div><div><h4>Your private Lovebox</h4><p>Send notes, doodles, squeezes, and small reminders from just the two of you.</p></div></article>
+          <article class="mini-card reveal"><div class="mini-icon" aria-hidden="true">◉</div><div><h4>Private by default</h4><p>Your answers and memories belong to your couple—not an ad profile.</p></div></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="prompt-section" id="play">
+      <div class="shell prompt-grid">
+        <div class="prompt-copy reveal">
+          <div class="eyebrow">Try one right now</div>
+          <h2 class="display">One question.<br /><span class="serif">See where it goes.</span></h2>
+          <p>Cozely gives you prompts that begin gently and open into a real conversation—without scoring vulnerability or forcing a mood.</p>
+        </div>
+        <div class="prompt-card reveal" data-prompt-card>
+          <div class="prompt-top">
+            <span class="depth" data-depth>Warm-up · 01</span>
+            <div class="depth-dots" data-dots aria-label="Prompt depth: one of three"><i class="active"></i><i></i><i></i></div>
+          </div>
+          <div class="question" data-question>What’s a tiny habit of mine you’d miss if it disappeared?</div>
+          <div class="prompt-bottom">
+            <span class="eyebrow">Read it out loud</span>
+            <button class="prompt-next" type="button" data-prompt-next>Go a little deeper →</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section keepsake">
+      <div class="shell keepsake-showcase">
+        <div class="keepsake-copy reveal">
+          <div class="eyebrow">Your shared story</div>
+          <h2 class="display">Keep what feels <span class="serif">like you.</span></h2>
+          <p>Answers, memories, special dates, and the shape of your relationship live together in one private place built for the two of you.</p>
+          <div class="feature-list">
+            <div class="feature-row"><b>01</b><span>Shared answers you can revisit and favorite</span></div>
+            <div class="feature-row"><b>02</b><span>Memories and meaningful dates in one couple space</span></div>
+            <div class="feature-row"><b>03</b><span>Your journey, nights together, points, and games played</span></div>
+          </div>
+        </div>
+        <div class="keepsake-art reveal" aria-label="The current Cozely shared answers, couple profile, and dates">
+          <div class="photo-card one"><img src="shots/current-answer.jpg" alt="The current shared-answer conversation screen" /><div class="photo-label">What you shared</div></div>
+          <div class="photo-card two"><img src="shots/current-profile.jpg" alt="The current You Two relationship profile" /><div class="photo-label">You two, lately</div></div>
+          <div class="photo-card three"><img src="shots/current-dates.jpg" alt="The current special dates screen" /><div class="photo-label">Something to look forward to</div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="steps">
+      <div class="shell">
+        <div class="steps-heading reveal">
+          <div class="eyebrow">From download to your space</div>
+          <h2 class="display">Together in <span class="serif">one minute.</span></h2>
+        </div>
+        <div class="step-list">
+          <article class="step-item reveal"><h3>Pair your phones</h3><p>Start a couple, share the code, and you’re connected. One phone also works for pass-and-play.</p></article>
+          <article class="step-item reveal"><h3>Notice each other</h3><p>Answer today’s question, send a note or squeeze, and reveal together when you’re both ready.</p></article>
+          <article class="step-item reveal"><h3>Explore what’s next</h3><p>Choose a quick game, follow a guided journey, add a memory, or save a date to look forward to.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="stories" id="journal">
+      <div class="shell">
+        <div class="stories-top reveal">
+          <div><div class="eyebrow">The Cozely journal</div><h2 class="display">For your next <span class="serif">night in.</span></h2></div>
+          <a class="text-link" href="stories.html">See every story ↗</a>
+        </div>
+        <div class="story-grid">
+          <a class="story reveal" href="story-questions.html"><div class="story-number">01</div><div><h3>50 questions that go deeper than small talk</h3><p>Warm, connected, then vulnerable—the prompts that actually open someone up.</p></div></a>
+          <a class="story reveal" href="story-busy.html"><div class="story-number">02</div><div><h3>Connection in a busy week</h3><p>Seven tiny rituals that punch well above their weight.</p></div></a>
+          <a class="story reveal" href="story-stayin.html"><div class="story-number">03</div><div><h3>A better night on the couch</h3><p>Twelve at-home date ideas with no reservation required.</p></div></a>
+        </div>
+      </div>
+    </section>
+
+    <section class="faq-section" id="faq">
+      <div class="shell faq-grid">
+        <div class="faq-title reveal">
+          <div class="eyebrow">Good to know</div>
+          <h2 class="display">A few <span class="serif">questions.</span></h2>
+          <p>Still wondering about something? <a class="text-link" href="support.html">Visit support</a>.</p>
+        </div>
+        <div class="faq reveal">
+          <div class="qa open"><button type="button" aria-expanded="true">Do we need two phones?<span>+</span></button><div class="answer"><div><p>It’s best on two—each partner plays from their own phone and both stay in sync. Several games also include a one-phone pass-and-play mode.</p></div></div></div>
+          <div class="qa"><button type="button" aria-expanded="false">Is Cozely for adults?<span>+</span></button><div class="answer"><div><p>Yes. Cozely is made for couples 18+. Most games are warm and playful; optional mature decks sit behind an age gate you choose to unlock.</p></div></div></div>
+          <div class="qa"><button type="button" aria-expanded="false">What can we do together?<span>+</span></button><div class="answer"><div><p>Answer a private daily question, send notes and doodles through Lovebox, play from a 30-game library, follow guided journeys, and keep shared memories and important dates.</p></div></div></div>
+          <div class="qa"><button type="button" aria-expanded="false">Is our content private?<span>+</span></button><div class="answer"><div><p>Your answers, photos, and notes are private to your couple. Cozely doesn’t sell data or run ads, and you can delete a memory—or your whole account—anytime.</p></div></div></div>
+          <div class="qa"><button type="button" aria-expanded="false">When can we play?<span>+</span></button><div class="answer"><div><p>Cozely is coming soon to the iOS App Store. Join the waitlist and we’ll send one launch-day message when it’s ready.</p></div></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="finale" id="waitlist">
+      <div class="shell finale-panel reveal">
+        <div class="eyebrow">Your private place starts here</div>
+        <h2 class="display">Put your phones <span class="serif">together.</span></h2>
+        <p>Join the first couples to play Cozely on iOS.</p>
+        <form class="waitlist" data-wl>
+          <label for="launch-email" style="position:absolute;left:-9999px">Email address</label>
+          <input id="launch-email" type="email" name="email" placeholder="you@email.com" autocomplete="email" required />
+          <input type="text" name="website" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px" aria-hidden="true" />
+          <button class="button" type="submit">Save my spot <span class="arrow">↗</span></button>
+        </form>
+        <div class="waitlist-message" data-wl-msg aria-live="polite"></div>
+        <div class="finale-note">One launch-day email. No spam. No awkward third wheel.</div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="shell">
+      <a class="brand" href="#top"><img src="assets/cozely-mark.svg" alt="" />Cozely</a>
+      <div class="footer-links"><a href="stories.html">Journal</a><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a><a href="support.html">Support</a></div>
+      <small>© 2026 Cozely · Made for two.</small>
+    </div>
+  </footer>
+
+  <script>
+    const WAITLIST_URL = "https://energetic-weasel-281.convex.site/waitlist";
+
+    document.querySelectorAll("form[data-wl]").forEach((form) => {
+      const msg = form.parentElement.querySelector("[data-wl-msg]");
+      form.addEventListener("submit", async (event) => {
+        event.preventDefault();
+        const data = Object.fromEntries(new FormData(form));
+        const button = form.querySelector("button");
+        button.disabled = true;
+        if (msg) msg.textContent = "Saving your spot…";
+        try {
+          const response = await fetch(WAITLIST_URL, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email: data.email, website: data.website, source: "landing-redesign" })
+          });
+          const result = await response.json();
+          if (result.ok) {
+            form.reset();
+            if (msg) msg.textContent = "You’re in. See you on launch day ♥";
+          } else if (msg) msg.textContent = result.error || "That didn’t work. Try once more.";
+        } catch {
+          if (msg) msg.textContent = "Small network hiccup—try once more.";
+        }
+        button.disabled = false;
+      });
+    });
+
+    document.querySelectorAll(".qa button").forEach((button) => {
+      button.addEventListener("click", () => {
+        const item = button.closest(".qa");
+        const open = item.classList.toggle("open");
+        button.setAttribute("aria-expanded", String(open));
+      });
+    });
+
+    const prompts = [
+      { depth: "Warm-up · 01", question: "What’s a tiny habit of mine you’d miss if it disappeared?", cta: "Go a little deeper →", count: 1 },
+      { depth: "Connected · 02", question: "When do you feel the most chosen by me?", cta: "One honest one →", count: 2 },
+      { depth: "Deeper · 03", question: "What’s something you need more of from me lately?", cta: "Start a full night ↗", count: 3 }
+    ];
+    let promptIndex = 0;
+    const promptButton = document.querySelector("[data-prompt-next]");
+    promptButton?.addEventListener("click", () => {
+      if (promptIndex === prompts.length - 1) {
+        document.querySelector("#waitlist")?.scrollIntoView({ behavior: "smooth" });
+        return;
+      }
+      promptIndex += 1;
+      const prompt = prompts[promptIndex];
+      document.querySelector("[data-depth]").textContent = prompt.depth;
+      document.querySelector("[data-question]").textContent = prompt.question;
+      promptButton.textContent = prompt.cta;
+      document.querySelectorAll("[data-dots] i").forEach((dot, index) => dot.classList.toggle("active", index < prompt.count));
+      const card = document.querySelector("[data-prompt-card]");
+      card.animate([{ transform: "rotate(1.5deg) translateY(12px)", opacity: .5 }, { transform: "rotate(1.5deg)", opacity: 1 }], { duration: 350, easing: "ease-out" });
+    });
+
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduceMotion) {
+      document.querySelectorAll(".reveal").forEach((element) => element.classList.add("in"));
+    } else {
+      const observer = new IntersectionObserver((entries) => entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("in");
+          observer.unobserve(entry.target);
+        }
+      }), { threshold: .12 });
+      document.querySelectorAll(".reveal").forEach((element) => observer.observe(element));
+    }
+  </script>
+</body>
+</html>
